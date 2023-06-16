@@ -66,22 +66,23 @@ jobs:
           password: ${{ secrets.GHCR_TOKEN }}
 
       - name: Deploy to prod
-        uses: appleboy/ssh-action@v0.1.10 with:
-        host: ${{secrets. HOST_PROD }}
-        username: ec2-user
-        key: ${{ secrets. PRIVATE KEY }}
-        script_stop: true
-        script: |
-          pwd
-          ls -al
-          cd automation_front
-          pwd
-          
-          echo ${{ secrets. GHCR_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-          
-          docker pull ghcr.io/silenc3502/frontend-server:latest
-          
-          docker image prune -f
-          docker logout
-          
-          docker-compose up -d
+        uses: appleboy/ssh-action@v0.1.10 
+        with:
+          host: ${{secrets. HOST_PROD }}
+          username: ec2-user
+          key: ${{ secrets. PRIVATE KEY }}
+          script_stop: true
+          script: |
+            pwd
+            ls -al
+            cd automation_front
+            pwd
+
+            echo ${{ secrets. GHCR_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+            docker pull ghcr.io/silenc3502/frontend-server:latest
+
+            docker image prune -f
+            docker logout
+
+            docker-compose up -d
