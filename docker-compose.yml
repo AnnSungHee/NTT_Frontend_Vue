@@ -6,3 +6,6 @@ services:
     networks:
       -app
 
+networks:
+  app:
+    driver: bridge
